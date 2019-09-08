@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+{{ ansible_managed|comment }}
+
+# upgrade system and ensure lsof is installed
+pacman -Syu --noconfirm lsof
+
+# count number of orphand libs
+orphaned_libs=$(lsof +c 0 | grep 'DEL.*lib' | wc -l)
+
+echo "$0 found $orphaned_libs orphaned libs after system upgrade."
+
+# reboot or not reboot
+if [ $orphaned_libs -gt 0 ]; then
+	wall "REBOOT in {{ reboot_timeout }} seconds to apply upgrades! Initiated by $0"
+	sleep {{ reboot_timeout }}
+	reboot
+else
+	echo "No orphaned libs found. Host upgraded without reboot."
+fi

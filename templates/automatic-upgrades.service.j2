@@ -1,0 +1,7 @@
+{{ ansible_managed|comment }}
+
+[Unit]
+Description=ansible automatic system upgrade service
+
+[Service]
+ExecStart=/usr/local/bin/automatic-upgrades.sh

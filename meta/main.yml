@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: archlinux_automatic_upgrades
+  author: Thomas Verchow
+  description: Setup automatic system upgrades on Arch Linux.
+  company: 
+  license: MIT
+  min_ansible_version: 2.7
+
+  platforms:
+    - name: ArchLinux
+      versions:
+      - all
+
+  galaxy_tags:
+    - archlinux 
+    - upgrade
+    - pacman

@@ -1,0 +1,6 @@
+---
+
+- name: restart au
+  systemd:
+    name: automatic-upgrades.timer
+    state: restarted

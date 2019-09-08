@@ -1,0 +1,26 @@
+---
+
+- name: setup script
+  template:
+    src: automatic-upgrades.sh.j2
+    dest: /usr/local/bin/automatic-upgrades.sh
+    mode: 0755
+  notify: restart au
+
+- name: setup systemd service
+  template:
+    src: automatic-upgrades.service.j2
+    dest: /etc/systemd/system/automatic-upgrades.service
+
+- name: setup systemd timer
+  template:
+    src: automatic-upgrades.timer.j2
+    dest: /etc/systemd/system/automatic-upgrades.timer
+  notify: restart au
+
+- name: start automatic upgrade service
+  systemd:
+    daemon_reload: true
+    name: automatic-upgrades.timer
+    enabled: true
+    state: started

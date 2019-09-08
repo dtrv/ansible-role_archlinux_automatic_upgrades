@@ -1,0 +1,4 @@
+---
+
+reboot_timeout: 60
+timer_on_calendar: '*-*-* 5:55:55'
