@@ -17,10 +17,10 @@ upgrade systems because this could bring your arch linux in an unpredictable sta
 Role Variables
 --------------
 
-| Parameter         | Choices/Defaults | Comments |
-| ----------------- | ---------------- | -------- |
-| reboot_timeout    | 60               | seconds to wait after informing all users and reboot |
-| timer_on_calendar | '*-*-* 5:55:55'  | systemd realtime timer argument for `OnCalendar` |
+| Parameter         | Choices/Defaults  | Comments |
+| ----------------- | ----------------- | -------- |
+| reboot_timeout    | 60                | seconds to wait after informing all users and reboot |
+| timer_on_calendar | `'*-*-* 5:55:55'` | systemd realtime timer argument for `OnCalendar` |
 
 
 Dependencies
