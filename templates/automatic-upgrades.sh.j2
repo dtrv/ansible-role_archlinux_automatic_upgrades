@@ -4,12 +4,13 @@
 
 # stop other automatic upgrade services to avoid conflicts
 # (we start these services after pacman's system upgrade)
+{% raw %}
 if [ "$(docker ps --format '{{.Names}}' 2>/dev/null | grep watchtower)" ]; then
   docker_watchtower=true
   docker stop watchtower
   sleep 3
 fi
-
+{% endraw %}
 
 # upgrade system and ensure lsof is installed
 pacman -Syu --noconfirm lsof
@@ -22,7 +23,7 @@ fi
 
 
 # check if we need to reboot
-orphaned_libs=$(lsof +c 0 | grep 'DEL.*lib' | wc -l)
+orphaned_libs=$(lsof -w +c 0 | grep 'DEL.*lib' | wc -l)
 echo "$0 found $orphaned_libs orphaned libs after system upgrade."
 
 if [ $orphaned_libs -gt 0 ]; then
