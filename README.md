@@ -3,10 +3,16 @@ archlinux automatic upgrades
 
 Install script and timer to automatic upgrade arch linux and reboot if necessary.
 
+If docker is installed and a running [watchtower](https://containrrr.github.io/watchtower/)
+container is found - it will be stopped before `pacman -Syu` and restarted before
+system reboot.
+
 Requirements
 ------------
 
-None.
+All applications running on the host should be rebootable.  
+You need to take steps so that the automatic upgrade does not interfere with other
+upgrade systems because this could bring your arch linux in an unpredictable state.
 
 Role Variables
 --------------

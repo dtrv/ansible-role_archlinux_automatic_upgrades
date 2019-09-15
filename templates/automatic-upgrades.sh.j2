@@ -2,15 +2,29 @@
 
 {{ ansible_managed|comment }}
 
+# stop other automatic upgrade services to avoid conflicts
+# (we start these services after pacman's system upgrade)
+if [ "$(docker ps --format '{{.Names}}' 2>/dev/null | grep watchtower)" ]; then
+  docker_watchtower=true
+  docker stop watchtower
+  sleep 3
+fi
+
+
 # upgrade system and ensure lsof is installed
 pacman -Syu --noconfirm lsof
 
-# count number of orphand libs
-orphaned_libs=$(lsof +c 0 | grep 'DEL.*lib' | wc -l)
 
+# start other automatic upgrade services we stopped before
+if [ $docker_watchtower ]; then
+  docker start watchtower
+fi
+
+
+# check if we need to reboot
+orphaned_libs=$(lsof +c 0 | grep 'DEL.*lib' | wc -l)
 echo "$0 found $orphaned_libs orphaned libs after system upgrade."
 
-# reboot or not reboot
 if [ $orphaned_libs -gt 0 ]; then
 	wall "REBOOT in {{ reboot_timeout }} seconds to apply upgrades! Initiated by $0"
 	sleep {{ reboot_timeout }}
