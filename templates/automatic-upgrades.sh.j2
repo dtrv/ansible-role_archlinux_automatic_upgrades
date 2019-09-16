@@ -2,6 +2,7 @@
 
 {{ ansible_managed|comment }}
 
+echo Running pre upgrade tasks.
 # stop other automatic upgrade services to avoid conflicts
 # (we start these services after pacman's system upgrade)
 {% raw %}
@@ -16,6 +17,7 @@ fi
 pacman -Syu --noconfirm lsof
 
 
+echo Running post upgrade tasks.
 # start other automatic upgrade services we stopped before
 if [ $docker_watchtower ]; then
   docker start watchtower
