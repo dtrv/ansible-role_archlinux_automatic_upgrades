@@ -30,6 +30,7 @@ echo "$0 found $orphaned_libs orphaned libs after system upgrade."
 
 if [ $orphaned_libs -gt 0 ]; then
 	wall "REBOOT in {{ reboot_timeout }} seconds to apply upgrades! Initiated by $0"
+	echo "REBOOT in {{ reboot_timeout }} seconds to apply upgrades! Initiated by $0"
 	sleep {{ reboot_timeout }}
 	reboot
 else
